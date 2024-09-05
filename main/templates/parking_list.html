@@ -1,0 +1,87 @@
+{% include 'header.html' %}
+
+
+<section>
+
+    {% include 'nav.html' %}
+
+
+    <div class="container-main" style="height: auto; overflow: scroll; padding: 40px;">
+
+
+        <h2 style="margin-bottom: 20px;">Vehicle Parking List</h2>
+
+        <style>
+            #table-parking-list{border-collapse:collapse;width:100%}#table-parking-list td,#table-parking-list th{padding:8px}#table-parking-list tr:nth-child(2n){background-color:#f2f2f2}#table-parking-list tr:hover{background-color:#ddd}#table-parking-list th{padding-top:12px;padding-bottom:12px;text-align:left;background-color:#6f6fff;color:#fff}
+        </style>
+
+        <div class="an-container-list"
+            style=" width: 80%; display: flex;align-items: center; justify-content: center;">
+
+            <table id="table-parking-list">
+                <tr>
+                    <th>SN</th>
+                    <th>Ticket ID</th>
+                    <th>Vehicle Number</th>
+                    <th>Entry Date & Time</th>
+                    <th>Exit Date & Time</th>
+                    <th>Invoice</th>
+                    <th>Status</th>
+                </tr>
+
+            {% for obj in obj_bookings %}
+
+                <tr class="row-link" data-my_id="{{obj.ticket_id}}">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{obj.ticket_id}}</td>
+                    <td>{{obj.vehicle_no}}</td>
+                    <td>{{obj.entry_date_time}}</td>
+                    <td>{{obj.exit_date_time}}</td>
+
+                    <td><a href="{% url 'invoice' ticket_no=obj.ticket_id %}">click here</a></td>
+
+                    <td>
+                        {% if obj.active == 'Yes' %}
+                            Active
+                        {% else %}
+                            Inactive
+                        {% endif %}
+
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+
+
+                
+
+            </table>
+        </div>
+
+    </div>
+</section>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('.row-link').click(function(){
+
+            var id = $(this).attr('data-my_id');
+
+            console.log(id);
+            window.location.href = "/info/"+id;
+
+        });
+
+
+        $('#btn-logout').click(function () {
+            window.location.href = "/login";
+        });
+
+    })
+</script>
+
+
+{% include 'footer.html' %}

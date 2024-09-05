@@ -1,0 +1,81 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container-main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 6px solid rgb(164, 164, 255); */
+    flex-direction: column;
+
+}
+
+.container-main form {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 50%;
+    padding:50px;
+    /* border: 1px solid blue; */
+
+}
+
+.container-main input, select, option {
+
+    border: 1px solid red;
+    padding: 10px;
+    width: 200px;
+    margin: 10px;
+    text-decoration: none;
+
+    border: 1px solid blue;
+
+}
+
+.container-main button {
+    padding: 10px;
+    margin: 10px;
+    /* align-self: flex-end; */
+    width: 200px;
+    /* border-radius: 10px; */
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    background-color: rgb(134, 198, 255);
+    font-weight: bold;
+}
+
+form div{
+    margin: 5px 0 5px 0;
+}
+
+form label{
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.an-nav{
+    height: 10vh;
+    border-bottom: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 40px 0 40px;
+}
+
+.an-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.an-links a{
+    margin: 10px;
+}

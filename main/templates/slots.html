@@ -1,0 +1,73 @@
+{% include 'header.html' %}
+
+<section>
+
+    {% include 'nav.html' %}
+
+    <div class="container-main" style="height: 90vh;">
+        <h2>Slot Entry</h2>
+        <form action="" method="post" id="frm-submit-slot">
+            {% csrf_token %}
+
+            <div>
+                <label for="">Block Name</label> <br>
+                <input type="text" name="block_name" id="block_name" placeholder="Enter Block Name" autocomplete="off">
+            </div>
+
+            <div>
+                <label for="">Number of Slots</label> <br>
+                <input type="number" min="1" name="number_of_slots" id="number_of_slots">
+            </div>
+
+            <div>
+                <label for="">Slot Type</label> <br>
+
+                <select name="slot_type" id="slot_type">
+                    <option value="">--select--</option>
+                    <option value="2-Wheeler">2-Wheeler</option>
+                    <option value="4-Wheeler">4-Wheeler</option>
+
+                </select>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</section>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#btn-logout').click(function () {
+            window.location.href = "/login";
+        });
+
+        var frm = $('#frm-submit-slot');
+
+        frm.submit(function () {
+            $.ajax({
+                type: 'POST',
+                url: '/slots/',
+                data: frm.serialize(),
+                success: function (result) {
+                    if (result.status == 'updated') {
+                        alert("Slot has been updated successfully!")
+                    } else {
+                        alert("Slot has been added successfully!")
+                    }
+
+                    $('#frm-submit-slot')[0].reset();
+
+                }
+            });
+            return false;
+
+        });
+
+    })
+</script>
+
+
+{% include 'footer.html' %}

@@ -1,0 +1,68 @@
+{% include 'header.html' %}
+
+
+<section>
+
+    {% include 'nav.html' %}
+
+    <div class="container-main" style="height: 90vh;">
+        <h2>Ticket Booking</h2>
+        <form action="" method="post" id="frm-submit-ticket">
+            {% csrf_token %}
+
+            <div>
+                <label for="">Vehicle Number</label> <br>
+                <input type="text" name="vehicle_no" id="vehicle_no" placeholder="Enter Vechile Number"
+                    autocomplete="off" style="text-transform:uppercase">
+            </div>
+
+            <div>
+                <label for="">Vehicle Type</label> <br>
+
+                <select name="slot_type" id="slot_type">
+                    <option value="2-Wheeler">2-Wheeler</option>
+                    <option value="4-Wheeler">4-Wheeler</option>
+                </select>
+            </div>
+
+            <button type="submit">Book</button>
+        </form>
+    </div>
+</section>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#btn-logout').click(function () {
+            window.location.href = "/login";
+        });
+
+        var frm = $('#frm-submit-ticket');
+
+        frm.submit(function () {
+            $.ajax({
+                type: 'POST',
+                url: '/booking/',
+                data: frm.serialize(),
+                success: function (result) {
+                    if (result.status == 'ok') {
+                        alert("Successfuly Booked!");
+                    } else {
+                        alert(result.status);
+                    }
+
+                    $('#frm-submit-ticket')[0].reset();
+
+                }
+            });
+            return false;
+
+        });
+
+    })
+</script>
+
+
+{% include 'footer.html' %}

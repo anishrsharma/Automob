@@ -1,0 +1,57 @@
+{% include 'header.html' %}
+
+
+    <section>
+
+        
+        {% include 'nav.html' %}
+
+        <div class="container-main" style="height: 90vh;">
+            <h2>Checkout</h2>
+            <form action="" method="post" id="frm-submit-checkout">
+                {% csrf_token %}
+
+                <div >
+                    <label for="">Ticket ID</label> <br>
+                    <input type="text" name="ticket_id" id="ticket_id" placeholder=""
+                        autocomplete="off" style="text-transform:uppercase">
+                </div>
+
+
+                <button type="submit">Checkout</button>
+            </form>
+        </div>
+    </section>
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            var frm = $('#frm-submit-checkout');
+
+            frm.submit(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/checkout/',
+                    data: frm.serialize(),
+                    success: function (result) {
+                        if (result.status == 'ok') {
+                            alert("Ticket has been removed successfully!")
+                        } else {
+                            alert("Something's wrong!")
+                        }
+
+                        $('#frm-submit-checkout')[0].reset();
+
+                    }
+                });
+                return false;
+
+            });
+
+        })
+    </script>
+
+
+{% include 'footer.html' %}

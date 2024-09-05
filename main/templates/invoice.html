@@ -1,0 +1,85 @@
+{% include 'header.html' %}
+
+
+<section>
+
+    {% include 'nav.html' %}
+
+
+    <div class="container-main" style="height: 90vh;">
+
+
+        <h2 style="margin-bottom: 20px;">Invoice - {{obj_booking.ticket_id}}</h2>
+
+
+        <div class="an-container-invoice" style="font-family: 'Courier New', Courier, monospace; border: 2px dashed blue; padding: 30px;">
+            <p style="font-family: 'Courier New', Courier, monospace; font-weight: 600; color: blue;">
+                Vehicle Registration Number --> {{obj_booking.vehicle_no}}
+            </p>
+            <p style="font-family: 'Courier New', Courier, monospace; font-weight: 600; color: blue;">
+                Slot -->  {{obj_booking.block_id}}{{obj_booking.slot_no}}
+            </p>
+            <p style="font-family: 'Courier New', Courier, monospace; font-weight: 600; color: blue;">
+                Vehicle type --> {{obj_booking.vehicle_type}}
+            </p>
+            <p style="font-family: 'Courier New', Courier, monospace; font-weight: 600; color: blue;">
+                Entry Time --> {{obj_booking.entry_date_time}}
+            </p>
+
+            <p style="font-family: 'Courier New', Courier, monospace; font-weight: 600; color: blue;">
+                Exit Time --> {{obj_booking.exit_date_time}}
+            </p>
+
+            <p style="font-family: 'Courier New', Courier, monospace; font-weight: 600; color: blue;">
+                Price --> {{obj_booking.price}}
+            </p>
+
+        </div>
+
+        <button>Download pdf</button>
+
+        <!-- <div class="an-container-invoice">
+            <div id="content">
+                <h3>Hello, this is a H3 tag</h3>
+
+                <p>A paragraph</p>
+            </div>
+            <div id="editor"></div>
+            <button id="cmd">generate PDF</button>
+
+
+        </div> -->
+
+    </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+                return true;
+            }
+        };
+
+        $('#cmd').click(function () {
+            doc.fromHTML($('#content').html(), 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+            doc.save('sample-file.pdf');
+        });
+
+    });
+
+
+
+
+</script>
+
+
+{% include 'footer.html' %}

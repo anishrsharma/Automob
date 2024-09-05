@@ -1,0 +1,98 @@
+{% include 'header.html' %}
+
+
+<section>
+
+    {% include 'nav.html' %}
+
+
+    <div class="container-main" style="height: 90vh;">
+
+        <div class="an-info" style="width: 100%; display: flex;">
+            <div style="margin: 0 10px;">
+                <div class="an-container-slot" style="display: flex;align-items: center;justify-content: center;">
+                </div>
+                <p>Available</p>
+
+            </div>
+
+            <div style="margin: 0 10px;">
+                <div class="an-container-slot"
+                    style="display: flex;align-items: center;justify-content: center;background-color: cyan">
+                </div>
+                <p>Not Available</p>
+            </div>
+
+        </div>
+
+        <h2>Slot Status</h2>
+
+        <div class="an-container-status">
+
+
+            {% if obj_slots %}
+
+            {% for obj in obj_slots %}
+
+            <div style="display: flex; align-items: center; flex-direction: column; justify-content: center;">
+                <h3>Block-{{obj.block}} ({{obj.type}})</h3>
+                <div class="an-container-block">
+
+                    {% for obj_child in obj_child_slots %}
+
+                    {% if obj_child.block == obj.block %}
+
+                    {% if obj_child.free == 'No' %}
+
+                    <a style="text-decoration: none;" href="{% url 'info' ticket_no=obj_child.ticket_no %}">
+                        <div class="an-container-slot"
+                            style="display: flex;align-items: center;justify-content: center;background-color: cyan">
+                            <p>{{ obj_child.slot_no }}</p>
+                        </div>
+                    </a>
+
+
+                    {% else %}
+
+                    <div class="an-container-slot" style="display: flex;align-items: center;justify-content: center;">
+                        <p>{{ obj_child.slot_no }}</p>
+                    </div>
+
+                    {% endif %}
+
+                    {% endif %}
+
+                    {% endfor %}
+
+
+                </div>
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            <h2>Slots not found</h2>
+            <a href="/slots">click here to create a slot</a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+</section>
+
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#btn-logout').click(function () {
+            window.location.href = "/login";
+        });
+
+    })
+</script>
+
+
+{% include 'footer.html' %}

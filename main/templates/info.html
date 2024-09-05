@@ -1,0 +1,85 @@
+{% include 'header.html' %}
+
+
+<section>
+
+    {% include 'nav.html' %}
+
+
+    <div class="container-main" style="height: 90vh;">
+
+
+        <h2>Slot Information</h2>
+
+        <div class="an-container-status"
+            style="display: flex; align-items: center; justify-content: center;padding: 20px;">
+
+            <div style="width: auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+
+                <p>Ticket ID: <b  style="text-transform: uppercase; font-weight: bold;">{{obj_booking.ticket_id}}</b></p>
+                <p>Vehicle Registration Number: <b style="text-transform: uppercase; font-weight: bold;">{{obj_booking.vehicle_no}}</b></p>
+                <p>Slot: <b style="text-transform: uppercase; font-weight: bold;">{{obj_booking.block_id}}{{obj_booking.slot_no}}</b></p>
+                <p>Status: <b  style="text-transform: uppercase; font-weight: bold;">
+                        {% if obj_booking.active == 'Yes' %}
+                        Parked
+                        {% else %}
+                        Not Parked
+                        {% endif %}
+                    </b></p>
+
+
+                <form action="" id="frm-submit-checkout" method="post" style="display: flex;">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="ticket_id" id="ticket_id" value="{{obj_booking.ticket_id}}">
+                    <button type="submit">Remove</button>
+                    <a href="{% url 'invoice' ticket_no=obj_booking.ticket_id %}">Invoice</a>
+                </form>
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+
+        var frm = $('#frm-submit-checkout');
+
+        frm.submit(function () {
+
+            if (confirm("Do you want to remove this ticket?") == true) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/checkout/',
+                    data: frm.serialize(),
+                    success: function (result) {
+                        if (result.status == 'ok') {
+                            alert("Ticket has been removed successfully!")
+                        } else {
+                            alert("Something's wrong!")
+                        }
+
+                         window.location.href = "/status/";
+                    }
+                });
+            }
+
+
+            return false;
+
+        });
+
+        $('#btn-logout').click(function () {
+            window.location.href = "/login";
+        });
+
+    })
+</script>
+
+
+{% include 'footer.html' %}
